@@ -13,7 +13,7 @@ object Data extends Controller {
     LevelDao.empty
     LevelDao.create(Level("start", LevelConf(List("start", "office"), "Départ")))
     LevelDao.create(Level("office",
-      LevelConf(List("office-water", "office-coffee"), "Bureau"))
+      LevelConf(List("office", "office-water", "office-coffee"), "Bureau"))
     )
 
     MenuDao.empty
