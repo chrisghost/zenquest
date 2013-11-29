@@ -17,7 +17,7 @@ object GameService {
     if(canGoTo(id, dest)) {
       println("updates")
       GameDao.byId(id).map { g =>
-        GameDao.update(g.goTo(dest))
+        GameDao.update(g.addTime(1).goTo(dest))
       }
     }
   }
@@ -39,11 +39,11 @@ object GameService {
               }
               case "office-coffee" => {
                 if(g.coffee > 0)
-                  g.addEnergy(2).addCoffee(-1)
+                  g.addEnergy(2).addCoffee(-1).addTime(1)
                 else
                   g
               }
-              case "office-water" => g.addEnergy(1)
+              case "office-water" => g.addEnergy(1).addTime(1)
               case _ => g
             }
             GameDao.update(nGame)
