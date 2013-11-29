@@ -3,7 +3,7 @@
 CREATE TABLE game (
   time int,
   karma int,
-  position int,
+  state text,
   energy int,
   id serial
 );

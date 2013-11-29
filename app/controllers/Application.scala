@@ -9,8 +9,12 @@ import daos._
 object Application extends Controller {
 
   def index = Action { implicit request =>
-    println(request.session)
-    Ok(views.html.index("Your new application is ready."))
+    request.session.get("gid") match {
+      case Some(id) => GameDao.byId(id.toLong).map { game =>
+        Ok(views.html.index(game))
+      }.getOrElse{ NotFound }
+      case None => Redirect(routes.Application.index).withSession()
+    }
   }
 
   def create = Action {
