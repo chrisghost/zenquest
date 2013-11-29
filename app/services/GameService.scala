@@ -21,4 +21,33 @@ object GameService {
       }
     }
   }
+
+  def make(id: Long, what: String) = {
+    if(canGoTo(id, what)) {
+      GameDao.byId(id).map { g =>
+        if(what.startsWith(g.state.position)) {
+            val nGame = what match {
+              case "start-gotowork_biking" => {
+                g
+              }
+              case "start-gotowork_metro" => {
+                g
+              }
+              case "start-gotowork_croissants" => {
+                g
+              }
+              case "office-coffee" => {
+                if(g.state.coffee > 0)
+                  g.copy(energy=g.energy+2).copy(state=g.state.copy(coffee=g.state.coffee-1))
+                else
+                  g
+              }
+              case "office-water" => g.copy(energy=g.energy+1)
+              case _ => g
+            }
+            GameDao.update(nGame)
+        }
+      }
+    }
+  }
 }

@@ -12,15 +12,15 @@ import play.api.libs.json._
 
 object LevelDao {
   def create(l: Level) = DB.withConnection { implicit conn =>
-    SQL(
+    val ss = SQL(
       """
-      INSERT INTO level VALUES
+      INSERT INTO level(id, conf) VALUES
       ({id}, {conf})
       """
     ).on(
       "id" -> l.id,
       "conf" -> Json.stringify(Json.toJson(l.conf))
-    ).executeInsert()
+    ).execute()
   }
 
   def byId(id: String):Option[Level]  = DB.withConnection { implicit conn =>

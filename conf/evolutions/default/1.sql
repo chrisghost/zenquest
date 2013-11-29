@@ -13,5 +13,13 @@ CREATE TABLE level (
   conf TEXT
 );
 
+CREATE TABLE menu (
+  id varchar(255),
+  choices TEXT
+);
 
 # --- !Downs
+ DROP TABLE game;
+ DROP TABLE level;
+ DROP TABLE menu;
+

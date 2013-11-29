@@ -3,11 +3,11 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index
+GET     /                           controllers.Application.index(menu: String)
 GET     /new                        controllers.Application.create
 GET     /go/:dest                   controllers.Application.go(dest: String)
 
-GET     /reset                      controllers.Application.resetDb
+GET     /reset                      controllers.Data.resetDb
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

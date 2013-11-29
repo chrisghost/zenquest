@@ -1,6 +1,6 @@
-@(game: Game)
+@(game: Game, menu: Option[Menu])
 
-@main("ZenQuest") {
+@main("ZenQuest", game, menu) {
   <h1>Office</h1>
 @game
 }
