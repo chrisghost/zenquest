@@ -3,7 +3,7 @@ package models
 import anorm._
 import anorm.SqlParser._
 
-case class Game(time: Long, karma: Long, position: Long, energy:Long, id: Long)
+case class Game(time: Long = 0, karma: Long = 0, position: Long = 0, energy:Long = 0, id: Long = 0)
 object Game {
   val simple = {
     get[Long]("game.id") ~

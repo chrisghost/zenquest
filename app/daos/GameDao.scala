@@ -8,17 +8,20 @@ import play.api.Play.current
 import models._
 
 object GameDao {
-  def create(g: Game) = DB.withConnection { conn =>
-    SQL(
-      """
-      INSERT INTO game VALUES
-      ({time}, {karma}, {position}, {energy})
-      """
-    ).on(
-      "time" -> g.time,
-      "karma" -> g.karma,
-      "position" -> g.position,
-      "energy" -> g.energy
+  def create(g: Game) = DB.withConnection { implicit conn =>
+    g.copy(id=
+      SQL(
+        """
+        INSERT INTO game VALUES
+        ({time}, {karma}, {position}, {energy})
+        RETURNING id
+        """
+      ).on(
+        "time" -> g.time,
+        "karma" -> g.karma,
+        "position" -> g.position,
+        "energy" -> g.energy
+      ).as(scalar[Long].single)
     )
   }
 

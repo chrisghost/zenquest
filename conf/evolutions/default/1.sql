@@ -1,16 +1,16 @@
 
 # --- !Ups
 CREATE TABLE game (
-  time: Long,
-  karma: Long,
-  position: Long,
-  energy: Long,
+  time int,
+  karma int,
+  position int,
+  energy int,
   id serial
 );
 
 CREATE TABLE level (
-  id String,
-  conf: TEXT
+  id varchar(255),
+  conf TEXT
 );
 
 # --- !Downs
