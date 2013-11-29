@@ -6,6 +6,7 @@ CREATE TABLE game (
   energy int,
   coffee int,
   position varchar(255),
+  progress varchar(255),
   id serial
 );
 

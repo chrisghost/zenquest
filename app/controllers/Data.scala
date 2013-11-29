@@ -16,6 +16,10 @@ object Data extends Controller {
       LevelConf(List("office", "office-water", "office-coffee"), "Bureau"))
     )
 
+    LevelDao.create(Level("devoffice",
+      LevelConf(List("devoffice", "office"), "Bureau des devs"))
+    )
+
     MenuDao.empty
     MenuDao.create(Menu("start-gotowork", Choices("Comment y allez vous?",
       List(
@@ -38,6 +42,13 @@ object Data extends Controller {
       , Choice("J'y vais en pyjama", "/go/start-closet-pyjama")
       )
     )))
+    MenuDao.create(Menu("office-talk_fl", Choices("Alors, prêt pour le daily?",
+      List(
+        Choice("Offrir un croissant", "/go/office-talk_fl-offer_croissant")
+      , Choice("C'est parti!", "/go/office-daily")
+      )
+    )))
+
 
     Ok("ok")
   }

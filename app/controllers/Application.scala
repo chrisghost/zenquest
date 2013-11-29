@@ -17,6 +17,7 @@ object Application extends Controller {
         game.position match {
           case "start" => Ok(views.html.start(game, choices))
           case "office" => Ok(views.html.office(game, choices))
+          case "devoffice" => Ok(views.html.devoffice(game, choices))
           case _ => Ok(views.html.index(game, choices))
         }
       }.getOrElse{ NotFound }
@@ -44,7 +45,7 @@ object Application extends Controller {
       else
         GameService.goTo(id.toLong, dest)
 
-      Redirect(routes.Application.index(None))
+      Redirect(routes.Application.index(Some(dest)))
     }.getOrElse( Redirect(routes.Application.create).withSession() )
   }
 }

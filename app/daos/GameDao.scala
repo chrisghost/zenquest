@@ -15,7 +15,7 @@ object GameDao {
       SQL(
         """
         INSERT INTO game VALUES
-        ({time}, {karma}, {energy}, {coffee}, {position})
+        ({time}, {karma}, {energy}, {coffee}, {position}, {progress})
         RETURNING id
         """
       ).on(
@@ -23,7 +23,8 @@ object GameDao {
         "karma" -> g.karma,
         "energy" -> g.energy,
         "coffee" -> g.coffee,
-        "position" -> g.position
+        "position" -> g.position,
+        "progress" -> g.progress
       ).as(scalar[Long].single)
     )
   }
@@ -36,6 +37,7 @@ object GameDao {
       karma = {karma},
       energy = {energy},
       position = {position},
+      progress = {progress},
       coffee = {coffee}
       WHERE id = {id}
       """
@@ -44,6 +46,7 @@ object GameDao {
       "karma" -> g.karma,
       "coffee" -> g.coffee,
       "position" -> g.position,
+      "progress" -> g.progress,
       "energy" -> g.energy,
       "id" -> g.id
     ).executeUpdate()

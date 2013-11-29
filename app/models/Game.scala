@@ -6,12 +6,13 @@ import anorm.SqlParser._
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
 
-case class Game(time: Long = 0, karma: Long = 0, energy:Long = 0, coffee: Long = 10, position: String = "start", id: Long = 0) {
+case class Game(time: Long = 0, karma: Long = 0, energy:Long = 0, coffee: Long = 10, position: String = "start", progress: String = "start", id: Long = 0) {
 
   def addKarma(i: Int) = copy(karma=karma+i)
   def addTime(i: Int) = copy(time=time+i)
   def addEnergy(i: Int) = copy(energy=energy+i)
   def addCoffee(i: Int) = copy(coffee=coffee+i)
+  def setProgress(i: String) = copy(progress=i)
   def goTo(pos: String) = copy(position=pos)
 
 }
@@ -22,9 +23,10 @@ object Game {
     get[Long]("game.karma") ~
     get[Long]("game.coffee") ~
     get[String]("game.position") ~
+    get[String]("game.progress") ~
     get[Long]("game.energy") map {
-      case id ~ time ~ karma ~ coffee ~ position ~ energy =>
-        Game(time, karma, energy, coffee, position, id)
+      case id ~ time ~ karma ~ coffee ~ position ~ progress ~ energy =>
+        Game(time, karma, energy, coffee, position, progress, id)
     }
   }
 }
