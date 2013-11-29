@@ -28,6 +28,25 @@ object GameDao {
     )
   }
 
+  def update(g: Game) = DB.withConnection { implicit conn =>
+    SQL(
+      """
+      UPDATE game SET
+      time = {time},
+      karma = {karma},
+      state = {state},
+      energy = {energy}
+      WHERE id = {id}
+      """
+    ).on(
+      "time" -> g.time,
+      "karma" -> g.karma,
+      "state" -> Json.stringify(Json.toJson(g.state)),
+      "energy" -> g.energy,
+      "id" -> g.id
+    ).executeUpdate()
+  }
+
   def byId(id: Long):Option[Game]  = DB.withConnection { implicit conn =>
     SQL(
       """

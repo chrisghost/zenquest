@@ -12,6 +12,10 @@ object LevelConf {
     (__ \ "canGoTo").read[List[String]] and
     (__ \ "name").read[String]
   )(LevelConf.apply _)
+  implicit val levelConfWrites: Writes[LevelConf]= (
+    (__ \ "canGoTo").write[List[String]] and
+    (__ \ "name").write[String]
+  )(unlift(LevelConf.unapply _))
 }
 case class Level(id: String, conf: LevelConf)
 object Level {
