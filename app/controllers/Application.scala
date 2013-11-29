@@ -14,7 +14,7 @@ object Application extends Controller {
       case Some(id) => GameDao.byId(id.toLong).map { game =>
         val choices = MenuDao.byId(menu.getOrElse(""))
 
-        game.state.position match {
+        game.position match {
           case "start" => Ok(views.html.start(game, choices))
           case "office" => Ok(views.html.office(game, choices))
           case _ => Ok(views.html.index(game, choices))

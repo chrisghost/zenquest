@@ -6,9 +6,9 @@ import daos._
 object GameService {
   def canGoTo(id: Long, dest: String) = {
     GameDao.byId(id).map { g =>
-      LevelDao.byId(g.state.position).map { lvl =>
-        println(g.state.position)
-        lvl.conf.canGoTo.filter(s => g.state.position.startsWith(s)).length > 0
+      LevelDao.byId(g.position).map { lvl =>
+        println(g.position)
+        lvl.conf.canGoTo.filter(s => g.position.startsWith(s)).length > 0
       }.getOrElse(false)
     }.getOrElse(false)
   }
@@ -17,7 +17,7 @@ object GameService {
     if(canGoTo(id, dest)) {
       println("updates")
       GameDao.byId(id).map { g =>
-        GameDao.update(g.copy(state=g.state.copy(position=dest)))
+        GameDao.update(g.goTo(dest))
       }
     }
   }
@@ -25,30 +25,25 @@ object GameService {
   def make(id: Long, what: String) = {
     if(canGoTo(id, what)) {
       GameDao.byId(id).map { g =>
-        println(what, g.state.position)
-        if(what.startsWith(g.state.position)) {
+        println(what, g.position)
+        if(what.startsWith(g.position)) {
             val nGame = what match {
               case "start-gotowork_biking" => {
-                g.copy(karma=g.karma+1)
-                  .copy(state=g.state.copy(position="office"))
-                  .copy(time=g.time+1)
+                g.addKarma(1).goTo("office").addTime(1)
               }
               case "start-gotowork_metro" => {
-                g.copy(state=g.state.copy(position="office"))
+                g.goTo("office")
               }
               case "start-gotowork_croissants" => {
-                g.copy(karma=g.karma+2)
-                  .copy(state=g.state.copy(position="office"))
-                  .copy(time=g.time+2)
+                g.addKarma(2).goTo("office").addTime(2)
               }
               case "office-coffee" => {
-                if(g.state.coffee > 0)
-                  g.copy(energy=g.energy+2)
-                    .copy(state=g.state.copy(coffee=g.state.coffee-1))
+                if(g.coffee > 0)
+                  g.addEnergy(2).addCoffee(-1)
                 else
                   g
               }
-              case "office-water" => g.copy(energy=g.energy+1)
+              case "office-water" => g.addEnergy(1)
               case _ => g
             }
             GameDao.update(nGame)

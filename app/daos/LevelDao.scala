@@ -6,7 +6,6 @@ import anorm.SqlParser._
 import java.sql.Connection
 import play.api.Play.current
 import models._
-import models.GameState._
 
 import play.api.libs.json._
 

@@ -3,8 +3,9 @@
 CREATE TABLE game (
   time int,
   karma int,
-  state text,
   energy int,
+  coffee int,
+  position varchar(255),
   id serial
 );
 

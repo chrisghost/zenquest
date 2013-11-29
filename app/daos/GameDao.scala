@@ -6,7 +6,6 @@ import anorm.SqlParser._
 import java.sql.Connection
 import play.api.Play.current
 import models._
-import models.GameState._
 
 import play.api.libs.json._
 
@@ -16,14 +15,15 @@ object GameDao {
       SQL(
         """
         INSERT INTO game VALUES
-        ({time}, {karma}, {state}, {energy})
+        ({time}, {karma}, {energy}, {coffee}, {position})
         RETURNING id
         """
       ).on(
         "time" -> g.time,
         "karma" -> g.karma,
-        "state" -> Json.stringify(Json.toJson(g.state)),
-        "energy" -> g.energy
+        "energy" -> g.energy,
+        "coffee" -> g.coffee,
+        "position" -> g.position
       ).as(scalar[Long].single)
     )
   }
@@ -34,14 +34,16 @@ object GameDao {
       UPDATE game SET
       time = {time},
       karma = {karma},
-      state = {state},
-      energy = {energy}
+      energy = {energy},
+      position = {position},
+      coffee = {coffee}
       WHERE id = {id}
       """
     ).on(
       "time" -> g.time,
       "karma" -> g.karma,
-      "state" -> Json.stringify(Json.toJson(g.state)),
+      "coffee" -> g.coffee,
+      "position" -> g.position,
       "energy" -> g.energy,
       "id" -> g.id
     ).executeUpdate()
