@@ -3,7 +3,7 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index(menu: String)
+GET     /                           controllers.Application.index(menu: Option[String])
 GET     /new                        controllers.Application.create
 GET     /go/:dest                   controllers.Application.go(dest: String)
 
