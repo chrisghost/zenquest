@@ -11,12 +11,19 @@ object Data extends Controller {
 
   def resetDb = Action {
     LevelDao.empty
-    LevelDao.create(Level("start", LevelConf(List("office"), "Départ")))
+    LevelDao.create(Level("start", LevelConf(List("start", "office"), "Départ")))
     LevelDao.create(Level("office",
       LevelConf(List("office-water", "office-coffee"), "Bureau"))
     )
 
     MenuDao.empty
+    MenuDao.create(Menu("start-gotowork", Choices("Comment y allez vous?",
+      List(
+        Choice("A vélo", "/go/start-gotowork_biking")
+      , Choice("En métro", "/go/start-gotowork_metro")
+      , Choice("En métro et je passe acheter des croissants", "/go/start-gotowork_croissants")
+      )
+    )))
     MenuDao.create(Menu("start-bathroom", Choices("Que faites-vous?",
       List(
         Choice("Je me brosse les dents", "/go/start-bathroom-brushtheeth")
